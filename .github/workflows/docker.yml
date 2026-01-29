@@ -1,0 +1,12 @@
+name: Docker Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker
+        run: |
+          docker build -t naomidragoi/catalog-note .
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u naomidragoi --password-stdin
+          docker push naomidragoi/catalog-note:latest
